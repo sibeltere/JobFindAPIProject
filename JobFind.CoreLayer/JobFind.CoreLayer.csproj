@@ -1,0 +1,24 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Settings\**" />
+    <EmbeddedResource Remove="Settings\**" />
+    <None Remove="Settings\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="Settings\IMongoDbSettings.cs" />
+    <Compile Include="Settings\MongoDbSettings.cs" />
+    <Compile Include="Settings\ServerSettings.cs" />
+    <Compile Include="Settings\SwaggerSettings.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.4" />
+  </ItemGroup>
+
+</Project>
