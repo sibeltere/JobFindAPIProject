@@ -13,7 +13,6 @@
   <ItemGroup>
     <Compile Include="Settings\IMongoDbSettings.cs" />
     <Compile Include="Settings\MongoDbSettings.cs" />
-    <Compile Include="Settings\ServerSettings.cs" />
     <Compile Include="Settings\SwaggerSettings.cs" />
   </ItemGroup>
 

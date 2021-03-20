@@ -7,7 +7,7 @@ namespace JobFind.Constants
 {
     public static class StatusMessage
     {
-        public const string HAS_EXCEPTION = "Sistemsel bir hata oluştu.";
-        public const string SUCCESS = "İşlem başarılı.";
+        public const string SUCCESS = "İşlem Başarılı.";
+        public const string HAS_EXCEPTION = "İşlem Başarısız!";
     }
 }

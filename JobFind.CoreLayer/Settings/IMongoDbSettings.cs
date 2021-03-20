@@ -9,6 +9,6 @@ namespace JobFind.CoreLayer.Settings
         string Database { get; set; }
         string Host { get; set; }
         int Port { get; set; }
-        string ConnectionString { get; set; }
+        string ConnectionString { get;}
     }
 }

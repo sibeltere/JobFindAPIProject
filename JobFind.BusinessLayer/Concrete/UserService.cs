@@ -22,14 +22,18 @@ namespace JobFind.BusinessLayer.Concrete
         #endregion
 
         #region Methods
-        public bool AddUser(UserDTO model)
+        public bool CreateUser(UserDTO model)
         {
+            if (model == null)
+            {
+                return false;
+            }
             var user = new User()
             {
                 UserName = model.UserName,
                 Email = model.Email,
                 Password = model.Password
-               
+
             };
             _userRepository.Create(user);
             return true;

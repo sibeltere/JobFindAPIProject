@@ -1,19 +1,13 @@
 ﻿using JobFind.BusinessLayer.Abstracts;
 using JobFind.BusinessLayer.Concrete;
 using JobFind.CoreLayer.Settings;
-using JobFind.DataLayer.Configs;
 using JobFind.DataLayer.Context;
-using JobFind.DataLayer.Entities;
 using JobFind.DataLayer.Repository;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 
 namespace JobFind.Containers.MicrosoftIoC
@@ -22,12 +16,6 @@ namespace JobFind.Containers.MicrosoftIoC
     {
         public static void AddServiceConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            //server configurations
-            //var config = new ServerSettings();
-            //configuration.Bind(config);
-
-
-
             var _serverSettings = configuration.GetSection(nameof(MongoDbSettings)).Get<MongoDbSettings>();
             var context = new MongoDbContext(_serverSettings);
 
@@ -46,7 +34,6 @@ namespace JobFind.Containers.MicrosoftIoC
         {
             services.Configure<MongoDbSettings>(configuration.GetSection(nameof(MongoDbSettings)));
             services.Configure<SwaggerSettings>(configuration.GetSection(nameof(SwaggerSettings)));
-            //services.Configure<ServerSettings>(configuration.GetSection(nameof(ServerSettings)));
         }
 
         public static void AddSwaggerConfiguration(this IServiceCollection services, IConfiguration configuration)

@@ -10,6 +10,13 @@ namespace JobFind.DataLayer.Repository
 {
     public interface IMongoRepositoryBase<T> where T : IEntity
     {
-        object Create(T model);
+        Task<T> GetFilter(Expression<Func<T, bool>> filter);
+        Task<T> Find(object id);
+        Task Create(T model);
+        Task<bool> Update(T model);
+        Task<bool> Delete(object id);
+        Task<IEnumerable<T>> GetAll();
+        Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> filter);
+
     }
 }

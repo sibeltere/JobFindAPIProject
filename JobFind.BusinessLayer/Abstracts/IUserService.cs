@@ -8,6 +8,6 @@ namespace JobFind.BusinessLayer.Abstracts
 {
     public interface IUserService
     {
-        bool AddUser(UserDTO user);
+        bool CreateUser(UserDTO user);
     }
 }

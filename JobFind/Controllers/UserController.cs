@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using JobFind.BusinessLayer.Abstracts;
+﻿using JobFind.BusinessLayer.Abstracts;
 using JobFind.Constants;
 using JobFind.DataLayer.DTOModels;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JobFind.Controllers
@@ -27,11 +22,14 @@ namespace JobFind.Controllers
         #endregion
 
         #region Methods
-        [HttpPost("AddUser")]
-        public IActionResult AddUser(UserDTO model)
+        [HttpPost("CreateUser")]
+        public IActionResult CreateUser(UserDTO model)
         {
-            _userService.AddUser(model);
-            return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, true);
+            var response = _userService.CreateUser(model);
+            if(!response)
+                return OK(StatusCodeType.HAS_EXCEPTION, StatusMessage.HAS_EXCEPTION, response);
+
+            return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
         }
         #endregion
     }
