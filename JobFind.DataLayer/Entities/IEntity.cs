@@ -9,7 +9,6 @@ namespace JobFind.DataLayer.Entities
     public interface IEntity
     {
         [BsonId]
-        [BsonRepresentation(BsonType.String)]
         ObjectId Id { get; set; }
         DateTime CreateDateTime { get; }
     }

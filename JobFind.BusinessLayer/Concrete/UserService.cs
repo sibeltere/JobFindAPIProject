@@ -31,7 +31,7 @@ namespace JobFind.BusinessLayer.Concrete
                 Password = model.Password
                
             };
-            _userRepository.InsertOne(user);
+            _userRepository.Create(user);
             return true;
         }
         #endregion

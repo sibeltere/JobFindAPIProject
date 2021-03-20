@@ -8,7 +8,5 @@ namespace JobFind.DataLayer.Context
 {
     public interface IMongoDbContext
     {
-        IMongoCollection<User> User { get; }
-        IMongoCollection<CV> CV { get; }
     }
 }

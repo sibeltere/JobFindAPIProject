@@ -16,8 +16,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\JobFind.BusinessLayer\JobFind.BusinessLayer.csproj" />
-    <ProjectReference Include="..\JobFind.CoreLayer\JobFind.CoreLayer.csproj" />
-    <ProjectReference Include="..\JobFind.DataLayer\JobFind.DataLayer.csproj" />
   </ItemGroup>
 
 

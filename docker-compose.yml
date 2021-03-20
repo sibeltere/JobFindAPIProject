@@ -9,16 +9,14 @@ services:
 
 
       
-  mongo:
+  mongodb:
     image: mongo
     restart: always
-    volumes:
-      - ${WEBAPP_STORAGE_HOME}/site:/data/db
-      #- ./data:/data/db
+    environment:
+     - MONGO_INITDB_DATABASE=JobFindDb
+     - MONGO_INITDB_ROOT_USERNAME=root
+     - MONGO_INITDB_ROOT_PASSWORD=example
+     - MONGO_INITDB_USERNAME=root
+     - MONGO_INITDB_PASSWORD=example
     ports:
-      - "27017:27017"
-
-  
-     
-
-
+     - "27017:27017"

@@ -33,7 +33,6 @@ namespace JobFind
             //services.AddJwtAuthenticationConfiguration(Configuration);
             services.AddServiceConfiguration(Configuration);
             services.AddSettingsConfiguration(Configuration);
-            services.AddControllers();
             services.AddSwaggerConfiguration(Configuration);
         }
 

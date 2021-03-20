@@ -1,24 +1,33 @@
 ﻿using JobFind.CoreLayer.Settings;
 using JobFind.DataLayer.Configs;
 using JobFind.DataLayer.Entities;
+using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Reflection;
 using System.Text;
 
 namespace JobFind.DataLayer.Context
 {
-    public class MongoDbContext : IMongoDbContext
+    public class MongoDbContext:IMongoDbContext
     {
+        private MongoClient _mongodbClient;
         private readonly IMongoDatabase _db;
         public MongoDbContext(MongoDbSettings config)
         {
-            var client = new MongoClient(config.ConnectionString);
-            _db = client.GetDatabase(config.Database);
+            _mongodbClient = new MongoClient(config.ConnectionString);
+            _db = _mongodbClient.GetDatabase(config.Database);
         }
 
-        public IMongoCollection<User> User => _db.GetCollection<User>("User");
+        public IMongoCollection<T> DbSet<T>() where T : BaseEntity
+        {
+            var table = typeof(T).GetCustomAttribute<TableAttribute>(false).Name;
+            return _db.GetCollection<T>(table);
 
-        public IMongoCollection<CV> CV => _db.GetCollection<CV>("CV");
+        }
+
+
     }
 }

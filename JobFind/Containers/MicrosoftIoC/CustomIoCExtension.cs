@@ -2,6 +2,7 @@
 using JobFind.BusinessLayer.Concrete;
 using JobFind.CoreLayer.Settings;
 using JobFind.DataLayer.Configs;
+using JobFind.DataLayer.Context;
 using JobFind.DataLayer.Entities;
 using JobFind.DataLayer.Repository;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace JobFind.Containers.MicrosoftIoC
 {
     public static class CustomIoCExtension
@@ -24,13 +26,15 @@ namespace JobFind.Containers.MicrosoftIoC
             //var config = new ServerSettings();
             //configuration.Bind(config);
 
-            //var _serverSettings = configuration.GetSection(nameof(ServerSettings)).Get<ServerSettings>();
-            //var context = new MongoDbContext(_serverSettings.MongoDB);
+
+
+            var _serverSettings = configuration.GetSection(nameof(MongoDbSettings)).Get<MongoDbSettings>();
+            var context = new MongoDbContext(_serverSettings);
 
             services.AddSingleton<IMongoDbSettings>(serviceProvider => serviceProvider.GetRequiredService<IOptions<MongoDbSettings>>().Value);
             services.AddScoped(typeof(IMongoRepositoryBase<>), typeof(MongoRepositoryBase<>));
             services.AddScoped<IUserService, UserService>();
-            //services.AddSingleton<IEntity, BaseEntity>();
+
 
             services.AddHttpContextAccessor();
             services.AddControllersWithViews();
@@ -42,7 +46,7 @@ namespace JobFind.Containers.MicrosoftIoC
         {
             services.Configure<MongoDbSettings>(configuration.GetSection(nameof(MongoDbSettings)));
             services.Configure<SwaggerSettings>(configuration.GetSection(nameof(SwaggerSettings)));
-            services.Configure<ServerSettings>(configuration.GetSection(nameof(ServerSettings)));
+            //services.Configure<ServerSettings>(configuration.GetSection(nameof(ServerSettings)));
         }
 
         public static void AddSwaggerConfiguration(this IServiceCollection services, IConfiguration configuration)

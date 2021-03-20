@@ -1,6 +1,8 @@
 ﻿using JobFind.CoreLayer.Settings;
 using JobFind.DataLayer.Configs;
+using JobFind.DataLayer.Context;
 using JobFind.DataLayer.Entities;
+using Microsoft.Extensions.Options;
 using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
@@ -12,143 +14,33 @@ using System.Threading.Tasks;
 
 namespace JobFind.DataLayer.Repository
 {
-    public class MongoRepositoryBase<TDocument> : IMongoRepositoryBase<TDocument>
-      where TDocument : IEntity
+    public class MongoRepositoryBase<T> : IMongoRepositoryBase<T>
+      where T : BaseEntity
     {
-        private readonly IMongoCollection<TDocument> _collection;
 
-        public MongoRepositoryBase(IMongoDbSettings settings)
+        private MongoDbContext _dbContext;
+        public IMongoCollection<T> Collection { get; private set; }
+        private readonly IOptions<MongoDbSettings> _dbSettings;
+
+
+        public MongoRepositoryBase(IOptions<MongoDbSettings> dbSettings)
         {
-            //var database = new MongoClient(settings.ConnectionString).GetDatabase(settings.Database);
-            //_collection = database.GetCollection<TDocument>(GetCollectionName(typeof(TDocument)));
-
-            var client = new MongoClient(settings.ConnectionString);
-            var database = client.GetDatabase(settings.Database);
-            _collection= database.GetCollection<TDocument>(GetCollectionName(typeof(TDocument)));
+            this._dbSettings = dbSettings; ;
+            _dbContext = new MongoDbContext(_dbSettings.Value);
+            Collection = _dbContext.DbSet<T>();
         }
 
-        private protected string GetCollectionName(Type documentType)
+        public object Create(T model)
         {
-            return ((BsonCollectionAttribute)documentType.GetCustomAttributes(
-                    typeof(BsonCollectionAttribute),
-                    true)
-                .FirstOrDefault())?.CollectionName;
-        }
-
-        public virtual IQueryable<TDocument> AsQueryable()
-        {
-            return _collection.AsQueryable();
-        }
-
-        public virtual IEnumerable<TDocument> FilterBy(
-            Expression<Func<TDocument, bool>> filterExpression)
-        {
-            return _collection.Find(filterExpression).ToEnumerable();
-        }
-
-        public virtual IEnumerable<TProjected> FilterBy<TProjected>(
-            Expression<Func<TDocument, bool>> filterExpression,
-            Expression<Func<TDocument, TProjected>> projectionExpression)
-        {
-            return _collection.Find(filterExpression).Project(projectionExpression).ToEnumerable();
-        }
-
-        public virtual TDocument FindOne(Expression<Func<TDocument, bool>> filterExpression)
-        {
-            return _collection.Find(filterExpression).FirstOrDefault();
-        }
-
-        public virtual Task<TDocument> FindOneAsync(Expression<Func<TDocument, bool>> filterExpression)
-        {
-            return Task.Run(() => _collection.Find(filterExpression).FirstOrDefaultAsync());
-        }
-
-        public virtual TDocument FindById(string id)
-        {
-            var objectId = new ObjectId(id);
-            var filter = Builders<TDocument>.Filter.Eq(doc => doc.Id, objectId);
-            return _collection.Find(filter).SingleOrDefault();
-        }
-
-        public virtual Task<TDocument> FindByIdAsync(string id)
-        {
-            return Task.Run(() =>
+            try
             {
-                var objectId = new ObjectId(id);
-                var filter = Builders<TDocument>.Filter.Eq(doc => doc.Id, objectId);
-                return _collection.Find(filter).SingleOrDefaultAsync();
-            });
-        }
-
-
-        public virtual void InsertOne(TDocument document)
-        {
-            _collection.InsertOne(document);
-        }
-
-        public virtual Task InsertOneAsync(TDocument document)
-        {
-            return Task.Run(() => _collection.InsertOneAsync(document));
-        }
-
-        public void InsertMany(ICollection<TDocument> documents)
-        {
-            _collection.InsertMany(documents);
-        }
-
-
-        public virtual async Task InsertManyAsync(ICollection<TDocument> documents)
-        {
-            await _collection.InsertManyAsync(documents);
-        }
-
-        public void ReplaceOne(TDocument document)
-        {
-            var filter = Builders<TDocument>.Filter.Eq(doc => doc.Id, document.Id);
-            _collection.FindOneAndReplace(filter, document);
-        }
-
-        public virtual async Task ReplaceOneAsync(TDocument document)
-        {
-            var filter = Builders<TDocument>.Filter.Eq(doc => doc.Id, document.Id);
-            await _collection.FindOneAndReplaceAsync(filter, document);
-        }
-
-        public void DeleteOne(Expression<Func<TDocument, bool>> filterExpression)
-        {
-            _collection.FindOneAndDelete(filterExpression);
-        }
-
-        public Task DeleteOneAsync(Expression<Func<TDocument, bool>> filterExpression)
-        {
-            return Task.Run(() => _collection.FindOneAndDeleteAsync(filterExpression));
-        }
-
-        public void DeleteById(string id)
-        {
-            var objectId = new ObjectId(id);
-            var filter = Builders<TDocument>.Filter.Eq(doc => doc.Id, objectId);
-            _collection.FindOneAndDelete(filter);
-        }
-
-        public Task DeleteByIdAsync(string id)
-        {
-            return Task.Run(() =>
+                Collection.InsertOne(model);
+                return 1;
+            }
+            catch (Exception ex)
             {
-                var objectId = new ObjectId(id);
-                var filter = Builders<TDocument>.Filter.Eq(doc => doc.Id, objectId);
-                _collection.FindOneAndDeleteAsync(filter);
-            });
-        }
-
-        public void DeleteMany(Expression<Func<TDocument, bool>> filterExpression)
-        {
-            _collection.DeleteMany(filterExpression);
-        }
-
-        public Task DeleteManyAsync(Expression<Func<TDocument, bool>> filterExpression)
-        {
-            return Task.Run(() => _collection.DeleteManyAsync(filterExpression));
+                return 0;
+            }
         }
     }
 }

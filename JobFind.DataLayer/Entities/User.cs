@@ -1,13 +1,8 @@
-﻿using JobFind.DataLayer.Configs;
-using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace JobFind.DataLayer.Entities
 {
-    [BsonCollection("User")]
+    [Table("User")]
     public class User : BaseEntity
     {
         public string UserName { get; set; }
