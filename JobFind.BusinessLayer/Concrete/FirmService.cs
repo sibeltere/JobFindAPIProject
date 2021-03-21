@@ -1,10 +1,13 @@
 ﻿using JobFind.BusinessLayer.Abstracts;
 using JobFind.DataLayer.DTOModels;
+using JobFind.DataLayer.DTOModels.Request;
+using JobFind.DataLayer.DTOModels.Response;
 using JobFind.DataLayer.Entities;
 using JobFind.DataLayer.Repository;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace JobFind.BusinessLayer.Concrete
 {
@@ -36,6 +39,34 @@ namespace JobFind.BusinessLayer.Concrete
 
             _firmRepository.Create(firm);
             return true;
+        }
+
+        public async Task<IEnumerable<ResponseFirmDTO>> GetAllFirm()
+        {
+            try
+            {
+                var returnedList = new List<ResponseFirmDTO>();
+
+                var allfirm = await _firmRepository.GetAll();
+                foreach (var item in allfirm)
+                {
+                    var model = new ResponseFirmDTO()
+                    {
+                        Id=item.Id,
+                       Address=item.Address,
+                       FirmName=item.Address
+                    };
+
+                    returnedList.Add(model);
+                }
+
+                return returnedList;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
         #endregion
 

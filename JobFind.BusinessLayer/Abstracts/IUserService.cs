@@ -1,4 +1,6 @@
 ﻿using JobFind.DataLayer.DTOModels;
+using JobFind.DataLayer.DTOModels.Request;
+using JobFind.DataLayer.DTOModels.Response;
 using JobFind.DataLayer.Entities;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,6 @@ namespace JobFind.BusinessLayer.Abstracts
     public interface IUserService
     {
         bool CreateUser(UserDTO userDTO);
-        Task<IEnumerable<UserDTO>> GetAllUser();
+        Task<IEnumerable<ResponseUserDTO>> GetAllUser();
     }
 }

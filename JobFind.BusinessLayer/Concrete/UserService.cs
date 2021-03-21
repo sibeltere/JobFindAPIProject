@@ -1,5 +1,7 @@
 ﻿using JobFind.BusinessLayer.Abstracts;
 using JobFind.DataLayer.DTOModels;
+using JobFind.DataLayer.DTOModels.Request;
+using JobFind.DataLayer.DTOModels.Response;
 using JobFind.DataLayer.Entities;
 using JobFind.DataLayer.Repository;
 using System;
@@ -40,17 +42,18 @@ namespace JobFind.BusinessLayer.Concrete
             return true;
         }
 
-        public async Task<IEnumerable<UserDTO>> GetAllUser()
+        public async Task<IEnumerable<ResponseUserDTO>> GetAllUser()
         {
             try
             {
-                var returnedList = new List<UserDTO>();
+                var returnedList = new List<ResponseUserDTO>();
 
                 var alluser = await _userRepository.GetAll();
                 foreach (var item in alluser)
                 {
-                    var model = new UserDTO()
+                    var model = new ResponseUserDTO()
                     {
+                        Id=item.Id,
                         UserName = item.UserName,
                         Email = item.Email,
                         Password = item.Password

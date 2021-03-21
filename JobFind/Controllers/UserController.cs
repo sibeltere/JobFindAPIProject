@@ -1,6 +1,7 @@
 ﻿using JobFind.BusinessLayer.Abstracts;
 using JobFind.Constants;
 using JobFind.DataLayer.DTOModels;
+using JobFind.DataLayer.DTOModels.Request;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;

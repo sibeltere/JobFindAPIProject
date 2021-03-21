@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using JobFind.BusinessLayer.Abstracts;
 using JobFind.Constants;
 using JobFind.DataLayer.DTOModels;
+using JobFind.DataLayer.DTOModels.Request;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,6 +32,16 @@ namespace JobFind.Controllers
         {
             var response = _firmService.CreateFirm(model);
             if (!response)
+                return OK(StatusCodeType.HAS_EXCEPTION, StatusMessage.HAS_EXCEPTION, response);
+
+            return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
+        }
+
+        [HttpGet("GetAllFirm")]
+        public async Task<IActionResult> GetAllFirm()
+        {
+            var response = await _firmService.GetAllFirm();
+            if (response == null)
                 return OK(StatusCodeType.HAS_EXCEPTION, StatusMessage.HAS_EXCEPTION, response);
 
             return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
