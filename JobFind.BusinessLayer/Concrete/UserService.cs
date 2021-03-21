@@ -53,7 +53,7 @@ namespace JobFind.BusinessLayer.Concrete
                 {
                     var model = new ResponseUserDTO()
                     {
-                        Id=item.Id,
+                        Id = item.Id,
                         UserName = item.UserName,
                         Email = item.Email,
                         Password = item.Password
@@ -71,6 +71,25 @@ namespace JobFind.BusinessLayer.Concrete
                 throw;
             }
 
+        }
+
+        public ResponseUserDTO GetUserByEmail(string email)
+        {
+            var userDTO = new ResponseUserDTO();
+            if (!string.IsNullOrEmpty(email))
+            {
+                var response = _userRepository.GetFilter(x => x.Email == email);
+                if (response != null)
+                {
+                    userDTO.Id = response.Result.Id;
+                    userDTO.Email = response.Result.Email;
+                    userDTO.UserName = response.Result.UserName;
+                    userDTO.Password = response.Result.Password;
+
+                }
+            }
+
+            return userDTO;
         }
         #endregion
 

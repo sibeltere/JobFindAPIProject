@@ -13,5 +13,6 @@ namespace JobFind.BusinessLayer.Abstracts
     {
         bool CreateUser(UserDTO userDTO);
         Task<IEnumerable<ResponseUserDTO>> GetAllUser();
+        ResponseUserDTO GetUserByEmail(string email);
     }
 }

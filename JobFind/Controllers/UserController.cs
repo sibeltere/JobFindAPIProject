@@ -28,8 +28,13 @@ namespace JobFind.Controllers
         [HttpPost("CreateUser")]
         public IActionResult CreateUser(UserDTO model)
         {
+            var user = _userService.GetUserByEmail(model.Email);
+            if (user != null)
+            {
+                return OK(StatusCodeType.ALREADY_HASEMAIL, StatusMessage.ALREADY_HASEMAIL,false);
+            }
             var response = _userService.CreateUser(model);
-            if(!response)
+            if (!response)
                 return OK(StatusCodeType.HAS_EXCEPTION, StatusMessage.HAS_EXCEPTION, response);
 
             return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
@@ -39,7 +44,7 @@ namespace JobFind.Controllers
         public async Task<IActionResult> GetAllUser()
         {
             var response = await _userService.GetAllUser();
-            if (response==null)
+            if (response == null)
                 return OK(StatusCodeType.HAS_EXCEPTION, StatusMessage.HAS_EXCEPTION, response);
 
             return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);

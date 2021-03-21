@@ -9,5 +9,6 @@ namespace JobFind.Constants
     {
         SUCCESS = 1000,
         HAS_EXCEPTION = 1001,
+        ALREADY_HASEMAIL=1002
     }
 }

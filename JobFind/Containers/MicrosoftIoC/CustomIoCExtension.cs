@@ -23,10 +23,11 @@ namespace JobFind.Containers.MicrosoftIoC
             services.AddScoped(typeof(IMongoRepositoryBase<>), typeof(MongoRepositoryBase<>));
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IFirmService, FirmService>();
+            services.AddScoped<ICVService, CVService>();
 
 
             services.AddHttpContextAccessor();
-            services.AddControllers().AddNewtonsoftJson(options =>options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
+            services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddHealthChecks();
             services.AddMemoryCache();
         }

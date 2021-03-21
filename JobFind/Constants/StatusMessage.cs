@@ -9,5 +9,6 @@ namespace JobFind.Constants
     {
         public const string SUCCESS = "İşlem Başarılı.";
         public const string HAS_EXCEPTION = "İşlem Başarısız!";
+        public const string ALREADY_HASEMAIL = "Bu e-mail adresiyle kayıtlı bir kullanıcı bulunmaktadır!";
     }
 }
