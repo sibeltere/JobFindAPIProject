@@ -46,7 +46,7 @@ namespace JobFind.BusinessLayer.Concrete
             {
                 var returnedList = new List<UserDTO>();
 
-                var alluser = await _userRepository.GetAll(x=>x.UserName=="sibel");
+                var alluser = await _userRepository.GetAll();
                 foreach (var item in alluser)
                 {
                     var model = new UserDTO()

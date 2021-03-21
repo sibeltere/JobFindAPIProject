@@ -18,5 +18,4 @@ services:
      - MONGO_INITDB_ROOT_PASSWORD=example
      - MONGO_INITDB_USERNAME=root
      - MONGO_INITDB_PASSWORD=example
-    ports:
-     - "27017:27017"
+   

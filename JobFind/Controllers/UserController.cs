@@ -34,7 +34,7 @@ namespace JobFind.Controllers
             return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
         }
 
-        [HttpPost("GetAllUser")]
+        [HttpGet("GetAllUser")]
         public async Task<IActionResult> GetAllUser()
         {
             var response = await _userService.GetAllUser();
