@@ -2,6 +2,8 @@
 using JobFind.Constants;
 using JobFind.DataLayer.DTOModels;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace JobFind.Controllers
 {
@@ -31,6 +33,17 @@ namespace JobFind.Controllers
 
             return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
         }
+
+        [HttpPost("GetAllUser")]
+        public async Task<IActionResult> GetAllUser()
+        {
+            var response = await _userService.GetAllUser();
+            if (response==null)
+                return OK(StatusCodeType.HAS_EXCEPTION, StatusMessage.HAS_EXCEPTION, response);
+
+            return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
+        }
+
         #endregion
     }
 }

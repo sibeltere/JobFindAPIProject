@@ -75,7 +75,15 @@ namespace JobFind.DataLayer.Repository
 
         public async Task<IEnumerable<T>> GetAll()
         {
-            return await Collection.Find(_ => true).ToListAsync();
+            try
+            {
+                return await Collection.Find(FilterDefinition<T>.Empty).ToListAsync();
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
         }
 
         public async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> filter)

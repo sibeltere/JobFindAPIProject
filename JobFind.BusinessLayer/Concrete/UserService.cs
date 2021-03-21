@@ -5,6 +5,7 @@ using JobFind.DataLayer.Repository;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace JobFind.BusinessLayer.Concrete
 {
@@ -22,21 +23,51 @@ namespace JobFind.BusinessLayer.Concrete
         #endregion
 
         #region Methods
-        public bool CreateUser(UserDTO model)
+        public bool CreateUser(UserDTO userDTO)
         {
-            if (model == null)
+            if (userDTO == null)
             {
                 return false;
             }
             var user = new User()
             {
-                UserName = model.UserName,
-                Email = model.Email,
-                Password = model.Password
+                UserName = userDTO.UserName,
+                Email = userDTO.Email,
+                Password = userDTO.Password
 
             };
             _userRepository.Create(user);
             return true;
+        }
+
+        public async Task<IEnumerable<UserDTO>> GetAllUser()
+        {
+            try
+            {
+                var returnedList = new List<UserDTO>();
+
+                var alluser = await _userRepository.GetAll(x=>x.UserName=="sibel");
+                foreach (var item in alluser)
+                {
+                    var model = new UserDTO()
+                    {
+                        UserName = item.UserName,
+                        Email = item.Email,
+                        Password = item.Password
+
+                    };
+
+                    returnedList.Add(model);
+                }
+
+                return returnedList;
+            }
+            catch (Exception ex)
+            {
+
+                throw;
+            }
+
         }
         #endregion
 

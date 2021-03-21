@@ -9,6 +9,8 @@ namespace JobFind.CoreLayer.Settings
         public string Database { get; set; }
         public string Host { get; set; }
         public int Port { get; set; }
-        public string ConnectionString => $@"mongodb://{Host}:{Port}";
+        public string ConnectionString => $@"mongodb://root:example@{Host}:{Port}/?authSource=admin&readPreference=primary&appname=MongoDB%20Compass&ssl=false";
+
+
     }
 }
