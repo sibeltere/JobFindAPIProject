@@ -15,12 +15,14 @@ namespace JobFind.Controllers
 
         #region Fields
         private readonly IUserService _userService;
+        private readonly ICVService _cvService;
         #endregion
 
         #region CTOR
-        public UserController(IUserService userService)
+        public UserController(IUserService userService,ICVService cvService)
         {
             this._userService = userService;
+            this._cvService = cvService;
         }
         #endregion
 
@@ -33,7 +35,29 @@ namespace JobFind.Controllers
             {
                 return OK(StatusCodeType.ALREADY_HASEMAIL, StatusMessage.ALREADY_HASEMAIL,false);
             }
+
             var response = _userService.CreateUser(model);
+            if (!response)
+                return OK(StatusCodeType.HAS_EXCEPTION, StatusMessage.HAS_EXCEPTION, response);
+
+            return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
+        }
+
+        [HttpPost("CreateCV")]
+        public IActionResult CreateCV(CVDTO model)
+        {
+            var user = _userService.GetUserById(model.UserId);
+            if (string.IsNullOrEmpty(user.Id))
+            {
+                return OK(StatusCodeType.USER_NOTFOUND, StatusMessage.USER_NOTFOUND, false);
+            }
+
+            if (user.CVDTO != null)
+            {
+                return OK(StatusCodeType.ALREADY_HASCV, StatusMessage.ALREADY_HASCV, false);
+            }
+
+            var response = _cvService.CreateCV(model);
             if (!response)
                 return OK(StatusCodeType.HAS_EXCEPTION, StatusMessage.HAS_EXCEPTION, response);
 

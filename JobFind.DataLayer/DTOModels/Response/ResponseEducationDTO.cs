@@ -1,13 +1,10 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace JobFind.DataLayer.Entities
+namespace JobFind.DataLayer.DTOModels.Response
 {
-    public class Education
+    public class ResponseEducationDTO
     {
         public string SchoolName { get; set; }
         public string Department { get; set; }

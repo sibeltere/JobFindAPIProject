@@ -13,14 +13,14 @@ namespace JobFind.BusinessLayer.Concrete
     public class CVService : ICVService
     {
         #region Fields
-        private readonly IMongoRepositoryBase<CV> _cvRepository;
+        private readonly IMongoRepositoryBase<User> _userRepository;
         private readonly IMapper _mapper;
         #endregion
 
         #region CTOR
-        public CVService(IMongoRepositoryBase<CV> cvRepository, IMapper mapper)
+        public CVService(IMongoRepositoryBase<User> userRepository, IMapper mapper)
         {
-            this._cvRepository = cvRepository;
+            this._userRepository = userRepository;
             this._mapper = mapper;
         }
         #endregion
@@ -32,9 +32,10 @@ namespace JobFind.BusinessLayer.Concrete
             {
                 return false;
             }
-
             var cv = _mapper.Map<CV>(cvDTO);
-            _cvRepository.Create(cv);
+            var user = _userRepository.GetFilter(x => x.Id == cvDTO.UserId);
+            user.Result.CV = cv;
+            _userRepository.Update(user.Result);
             return true;
         }
         #endregion

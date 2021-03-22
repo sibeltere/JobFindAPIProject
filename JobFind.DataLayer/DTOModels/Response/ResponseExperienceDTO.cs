@@ -1,13 +1,10 @@
-﻿using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace JobFind.DataLayer.Entities
+namespace JobFind.DataLayer.DTOModels.Response
 {
-    public class Experience
+    public class ResponseExperienceDTO
     {
         public string CompanyName { get; set; }
         public string Position { get; set; }

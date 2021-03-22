@@ -52,12 +52,28 @@ namespace JobFind.BusinessLayer.Concrete
             return returnedList;
         }
 
+
         public ResponseUserDTO GetUserByEmail(string email)
         {
             var userDTO = new ResponseUserDTO();
             if (!string.IsNullOrEmpty(email))
             {
                 var response = _userRepository.GetFilter(x => x.Email == email);
+                if (response.Result != null)
+                {
+                    userDTO = _mapper.Map<ResponseUserDTO>(response.Result);
+                }
+            }
+
+            return userDTO;
+        }
+
+        public ResponseUserDTO GetUserById(string Id)
+        {
+            var userDTO = new ResponseUserDTO();
+            if (!string.IsNullOrEmpty(Id))
+            {
+                var response = _userRepository.GetFilter(x => x.Id == Id);
                 if (response.Result != null)
                 {
                     userDTO = _mapper.Map<ResponseUserDTO>(response.Result);

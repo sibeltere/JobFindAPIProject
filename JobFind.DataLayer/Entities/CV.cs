@@ -7,8 +7,7 @@ using System.Text;
 
 namespace JobFind.DataLayer.Entities
 {
-    [Table("CV")]
-    public class CV : BaseEntity
+    public class CV 
     {
         public string Job { get; set; }
         public IList<Education> EducationInformations { get; set; }

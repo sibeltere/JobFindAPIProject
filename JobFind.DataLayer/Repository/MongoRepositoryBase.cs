@@ -56,9 +56,8 @@ namespace JobFind.DataLayer.Repository
 
         public async Task<bool> Update(T model)
         {
-            var filterId = Builders<T>.Filter.Eq("_id", model.Id);
-            var updated = await Collection.FindOneAndReplaceAsync(filterId, model);
-            return updated != null;
+            ReplaceOneResult updateResult = await Collection.ReplaceOneAsync(filter: g => g.Id == model.Id, replacement: model);
+            return updateResult.IsAcknowledged && updateResult.ModifiedCount > 0;
         }
 
         public async Task<bool> Delete(object Id)

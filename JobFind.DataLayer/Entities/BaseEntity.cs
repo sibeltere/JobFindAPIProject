@@ -8,7 +8,6 @@ namespace JobFind.DataLayer.Entities
 {
     public class BaseEntity : IEntity
     {
-
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
         public string Id { get; set; }

@@ -42,7 +42,7 @@ namespace JobFind.Controllers
         {
             var response = await _firmService.GetAllFirm();
             if (response == null)
-                return OK(StatusCodeType.HAS_EXCEPTION, StatusMessage.HAS_EXCEPTION, response);
+                return OK(StatusCodeType.HAS_EXCEPTION, StatusMessage.HAS_EXCEPTION, false);
 
             return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
         }
