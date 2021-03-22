@@ -1,4 +1,5 @@
-﻿using JobFind.BusinessLayer.Abstracts;
+﻿using AutoMapper;
+using JobFind.BusinessLayer.Abstracts;
 using JobFind.DataLayer.DTOModels.Request;
 using JobFind.DataLayer.Entities;
 using JobFind.DataLayer.Repository;
@@ -13,12 +14,14 @@ namespace JobFind.BusinessLayer.Concrete
     {
         #region Fields
         private readonly IMongoRepositoryBase<CV> _cvRepository;
+        private readonly IMapper _mapper;
         #endregion
 
         #region CTOR
-        public CVService(IMongoRepositoryBase<CV> cvRepository)
+        public CVService(IMongoRepositoryBase<CV> cvRepository, IMapper mapper)
         {
             this._cvRepository = cvRepository;
+            this._mapper = mapper;
         }
         #endregion
 
@@ -29,12 +32,8 @@ namespace JobFind.BusinessLayer.Concrete
             {
                 return false;
             }
-            var cv = new CV()
-            {
-               
 
-
-            };
+            var cv = _mapper.Map<CV>(cvDTO);
             _cvRepository.Create(cv);
             return true;
         }

@@ -1,4 +1,5 @@
-﻿using JobFind.BusinessLayer.Abstracts;
+﻿using AutoMapper;
+using JobFind.BusinessLayer.Abstracts;
 using JobFind.DataLayer.DTOModels;
 using JobFind.DataLayer.DTOModels.Request;
 using JobFind.DataLayer.DTOModels.Response;
@@ -15,12 +16,14 @@ namespace JobFind.BusinessLayer.Concrete
     {
         #region Fields
         private readonly IMongoRepositoryBase<Firm> _firmRepository;
+        private readonly IMapper _mapper;
         #endregion
 
         #region CTOR
-        public FirmService(IMongoRepositoryBase<Firm> firmRepository)
+        public FirmService(IMongoRepositoryBase<Firm> firmRepository, IMapper mapper)
         {
             this._firmRepository = firmRepository;
+            this._mapper = mapper;
         }
         #endregion
 
@@ -31,42 +34,21 @@ namespace JobFind.BusinessLayer.Concrete
             {
                 return false;
             }
-            var firm = new Firm()
-            {
-                FirmName = firmDTO.FirmName,
-                Address = firmDTO.Address
-            };
-
+            var firm = _mapper.Map<Firm>(firmDTO);
             _firmRepository.Create(firm);
             return true;
         }
 
         public async Task<IEnumerable<ResponseFirmDTO>> GetAllFirm()
         {
-            try
+            var returnedList = new List<ResponseFirmDTO>();
+
+            var allfirm = await _firmRepository.GetAll();
+            if (allfirm != null)
             {
-                var returnedList = new List<ResponseFirmDTO>();
-
-                var allfirm = await _firmRepository.GetAll();
-                foreach (var item in allfirm)
-                {
-                    var model = new ResponseFirmDTO()
-                    {
-                        Id=item.Id,
-                       Address=item.Address,
-                       FirmName=item.Address
-                    };
-
-                    returnedList.Add(model);
-                }
-
-                return returnedList;
+                returnedList = _mapper.Map<List<ResponseFirmDTO>>(allfirm);
             }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
+            return returnedList;
         }
         #endregion
 

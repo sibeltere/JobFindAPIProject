@@ -77,7 +77,7 @@ namespace JobFind.DataLayer.Repository
         {
             try
             {
-                return await Collection.Find(FilterDefinition<T>.Empty).ToListAsync();
+                return await Collection.Find(x => true).ToListAsync();
             }
             catch (Exception ex)
             {

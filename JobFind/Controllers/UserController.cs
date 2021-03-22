@@ -29,7 +29,7 @@ namespace JobFind.Controllers
         public IActionResult CreateUser(UserDTO model)
         {
             var user = _userService.GetUserByEmail(model.Email);
-            if (user != null)
+            if (!string.IsNullOrEmpty(user.Id))
             {
                 return OK(StatusCodeType.ALREADY_HASEMAIL, StatusMessage.ALREADY_HASEMAIL,false);
             }

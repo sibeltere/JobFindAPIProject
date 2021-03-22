@@ -22,6 +22,7 @@ namespace JobFind
         public void ConfigureServices(IServiceCollection services)
         {
             //services.AddJwtAuthenticationConfiguration(Configuration);
+            services.AddAutoMapper(typeof(Startup));
             services.AddServiceConfiguration(Configuration);
             services.AddSettingsConfiguration(Configuration);
             services.AddSwaggerConfiguration(Configuration);
