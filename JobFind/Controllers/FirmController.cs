@@ -46,6 +46,33 @@ namespace JobFind.Controllers
 
             return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
         }
+
+        [HttpPost("AddJobPost")]
+        public IActionResult AddJobPost(JobPostDTO model)
+        {
+            var firm = _firmService.GetFirmById(model.FirmId);
+            if (string.IsNullOrEmpty(firm.Id))
+            {
+                return OK(StatusCodeType.FIRM_NOTFOUND, StatusMessage.FIRM_NOTFOUND, false);
+            }
+
+            var response = _firmService.AddFirmJobPost(model);
+            if (!response)
+                return OK(StatusCodeType.HAS_EXCEPTION, StatusMessage.HAS_EXCEPTION, false);
+           
+            return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
+        }
+
+
+        [HttpPost("DeleteFirm")]
+        public IActionResult DeleteFirm(string firmId)
+        {
+            var response = _firmService.DeleteFirm(firmId);
+            if (!response)
+                return OK(StatusCodeType.HAS_EXCEPTION, StatusMessage.HAS_EXCEPTION, response);
+
+            return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
+        }
         #endregion
     }
 }

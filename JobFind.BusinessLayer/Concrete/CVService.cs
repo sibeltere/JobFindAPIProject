@@ -29,9 +29,8 @@ namespace JobFind.BusinessLayer.Concrete
         public bool CreateCV(CVDTO cvDTO)
         {
             if (cvDTO == null)
-            {
                 return false;
-            }
+
             var cv = _mapper.Map<CV>(cvDTO);
             var user = _userRepository.GetFilter(x => x.Id == cvDTO.UserId);
             user.Result.CV = cv;

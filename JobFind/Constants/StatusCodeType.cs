@@ -11,7 +11,8 @@ namespace JobFind.Constants
         HAS_EXCEPTION = 1001,
         ALREADY_HASEMAIL=1002,
         USER_NOTFOUND=1003,
-        ALREADY_HASCV = 1004
+        ALREADY_HASCV = 1004,
+        FIRM_NOTFOUND = 1005
 
     }
 }

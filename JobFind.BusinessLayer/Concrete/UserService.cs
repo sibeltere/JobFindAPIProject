@@ -40,6 +40,16 @@ namespace JobFind.BusinessLayer.Concrete
             return true;
         }
 
+        public bool DeleteUser(string userId)
+        {
+            if (string.IsNullOrEmpty(userId))
+            {
+                return false;
+            }
+            _userRepository.Delete(userId);
+            return true;
+        }
+
         public async Task<IEnumerable<ResponseUserDTO>> GetAllUser()
         {
             var returnedList = new List<ResponseUserDTO>();

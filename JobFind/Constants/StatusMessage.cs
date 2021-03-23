@@ -12,5 +12,6 @@ namespace JobFind.Constants
         public const string ALREADY_HASEMAIL = "Bu e-mail adresiyle kayıtlı bir kullanıcı bulunmaktadır!";
         public const string USER_NOTFOUND = "Kullanıcı bulunmamaktadır";
         public const string ALREADY_HASCV = "Kullanıcının yalnızca bir adet CV'si oluşturulabilir";
+        public const string FIRM_NOTFOUND = "Firma bulunamadı!";
     }
 }

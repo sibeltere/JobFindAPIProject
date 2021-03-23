@@ -19,7 +19,7 @@ namespace JobFind.Controllers
         #endregion
 
         #region CTOR
-        public UserController(IUserService userService,ICVService cvService)
+        public UserController(IUserService userService, ICVService cvService)
         {
             this._userService = userService;
             this._cvService = cvService;
@@ -33,10 +33,20 @@ namespace JobFind.Controllers
             var user = _userService.GetUserByEmail(model.Email);
             if (!string.IsNullOrEmpty(user.Id))
             {
-                return OK(StatusCodeType.ALREADY_HASEMAIL, StatusMessage.ALREADY_HASEMAIL,false);
+                return OK(StatusCodeType.ALREADY_HASEMAIL, StatusMessage.ALREADY_HASEMAIL, false);
             }
 
             var response = _userService.CreateUser(model);
+            if (!response)
+                return OK(StatusCodeType.HAS_EXCEPTION, StatusMessage.HAS_EXCEPTION, response);
+
+            return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
+        }
+
+        [HttpPost("DeleteUser")]
+        public IActionResult DeleteUser(string userId)
+        {
+            var response = _userService.DeleteUser(userId);
             if (!response)
                 return OK(StatusCodeType.HAS_EXCEPTION, StatusMessage.HAS_EXCEPTION, response);
 
@@ -52,7 +62,7 @@ namespace JobFind.Controllers
                 return OK(StatusCodeType.USER_NOTFOUND, StatusMessage.USER_NOTFOUND, false);
             }
 
-            if (user.CVDTO != null)
+            if (user.ResponseCVDTO != null)
             {
                 return OK(StatusCodeType.ALREADY_HASCV, StatusMessage.ALREADY_HASCV, false);
             }

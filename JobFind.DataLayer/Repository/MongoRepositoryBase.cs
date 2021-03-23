@@ -62,27 +62,16 @@ namespace JobFind.DataLayer.Repository
 
         public async Task<bool> Delete(object Id)
         {
-            ObjectId objectId;
-            if (!ObjectId.TryParse(Id.ToString(), out objectId))
-            {
-                return false;
-            }
-            var filterId = Builders<T>.Filter.Eq("_id", objectId);
-            var deleted = await Collection.FindOneAndDeleteAsync(filterId);
-            return deleted != null;
+            FilterDefinition<T> filter = Builders<T>.Filter.Eq(m => m.Id, Id);
+            DeleteResult deleteResult = await Collection.DeleteOneAsync(filter);
+
+            return deleteResult.IsAcknowledged
+                && deleteResult.DeletedCount > 0;
         }
 
         public async Task<IEnumerable<T>> GetAll()
         {
-            try
-            {
-                return await Collection.Find(x => true).ToListAsync();
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
+            return await Collection.Find(x => true).ToListAsync();
         }
 
         public async Task<IEnumerable<T>> GetAll(Expression<Func<T, bool>> filter)

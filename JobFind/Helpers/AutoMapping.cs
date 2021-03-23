@@ -18,13 +18,15 @@ namespace JobFind.Helpers
             CreateMap<User, UserDTO>()
                 .ReverseMap();
             CreateMap<User, ResponseUserDTO>()
-                .ForMember(x => x.CVDTO, cd => cd.MapFrom(map => map.CV))
+                .ForMember(x => x.ResponseCVDTO, cd => cd.MapFrom(map => map.CV))
                 .ReverseMap();
             #endregion
 
             #region FirmMap
             CreateMap<Firm, FirmDTO>().ReverseMap();
-            CreateMap<Firm, ResponseFirmDTO>().ReverseMap();
+            CreateMap<Firm, ResponseFirmDTO>()
+                 .ForMember(x => x.ResponseJobPostDTOs, cd => cd.MapFrom(map => map.JobPosts))
+                .ReverseMap();
             #endregion
 
             #region EducationMap
@@ -49,9 +51,9 @@ namespace JobFind.Helpers
             #endregion
 
 
-
             #region JobPostMap
             CreateMap<JobPost, JobPostDTO>().ReverseMap();
+            CreateMap<JobPost, ResponseJobPostDTO>().ReverseMap();
             #endregion
 
 

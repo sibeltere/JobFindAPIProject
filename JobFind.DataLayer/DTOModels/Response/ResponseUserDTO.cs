@@ -11,6 +11,6 @@ namespace JobFind.DataLayer.DTOModels.Response
         public string UserName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }
-        public CVDTO CVDTO { get; set; }
+        public ResponseCVDTO ResponseCVDTO { get; set; }
     }
 }

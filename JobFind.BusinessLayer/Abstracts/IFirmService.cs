@@ -11,6 +11,9 @@ namespace JobFind.BusinessLayer.Abstracts
     public interface IFirmService
     {
         bool CreateFirm(FirmDTO firmDTO);
+        bool DeleteFirm(string firmId);
+        bool AddFirmJobPost(JobPostDTO jobPostDTO);
         Task<IEnumerable<ResponseFirmDTO>> GetAllFirm();
+        ResponseFirmDTO GetFirmById(string Id);
     }
 }

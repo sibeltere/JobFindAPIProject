@@ -12,6 +12,7 @@ namespace JobFind.BusinessLayer.Abstracts
     public interface IUserService
     {
         bool CreateUser(UserDTO userDTO);
+        bool DeleteUser(string userId);
         Task<IEnumerable<ResponseUserDTO>> GetAllUser();
         ResponseUserDTO GetUserByEmail(string email);
         ResponseUserDTO GetUserById(string Id);
