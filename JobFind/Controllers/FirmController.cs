@@ -8,6 +8,7 @@ using JobFind.DataLayer.DTOModels;
 using JobFind.DataLayer.DTOModels.Request;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace JobFind.Controllers
 {
@@ -17,12 +18,14 @@ namespace JobFind.Controllers
     {
         #region Fields
         private readonly IFirmService _firmService;
+        private readonly IMemoryCache _memCache;
         #endregion
 
         #region CTOR
-        public FirmController(IFirmService firmService)
+        public FirmController(IFirmService firmService, IMemoryCache memCache)
         {
             this._firmService = firmService;
+            this._memCache = memCache;
         }
         #endregion
 
@@ -40,11 +43,23 @@ namespace JobFind.Controllers
         [HttpGet("GetAllFirm")]
         public async Task<IActionResult> GetAllFirm()
         {
-            var response = await _firmService.GetAllFirm();
-            if (response == null)
+            const string cacheKey = "allFirmList";
+
+            bool isCached = _memCache.TryGetValue(cacheKey, out object list);
+            if (isCached)
+                return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, list);
+
+            var allFirm = await _firmService.GetAllFirm();
+            if (allFirm == null)
                 return OK(StatusCodeType.HAS_EXCEPTION, StatusMessage.HAS_EXCEPTION, false);
 
-            return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
+            _memCache.Set(cacheKey, allFirm, new MemoryCacheEntryOptions
+            {
+                AbsoluteExpiration = DateTime.Now.AddMinutes(2), //iki dakika boyunca cacheden okur
+                Priority = CacheItemPriority.Normal
+            });
+
+            return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, allFirm);
         }
 
         [HttpPost("AddJobPost")]

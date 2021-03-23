@@ -11,5 +11,6 @@ namespace JobFind.DataLayer.DTOModels.Response
         public string Definition { get; set; }
         public string Location { get; set; }
         public DateTime ExpirationDate { get; set; }
+        public List<string> ApplyUsers { get; set; }
     }
 }

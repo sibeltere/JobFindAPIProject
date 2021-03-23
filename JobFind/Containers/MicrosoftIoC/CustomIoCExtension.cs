@@ -24,6 +24,7 @@ namespace JobFind.Containers.MicrosoftIoC
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IFirmService, FirmService>();
             services.AddScoped<ICVService, CVService>();
+            services.AddScoped<IJobPostService, JobPostService>();
 
 
             services.AddHttpContextAccessor();

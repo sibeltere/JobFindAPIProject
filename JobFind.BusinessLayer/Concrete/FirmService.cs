@@ -46,6 +46,15 @@ namespace JobFind.BusinessLayer.Concrete
             if (string.IsNullOrEmpty(firmId))
                 return false;
 
+            var jobPostList = _jobPostRepository.GetAll(x => x.FirmId == firmId).Result;
+            if (jobPostList != null)
+            {
+                foreach (var item in jobPostList)
+                {
+                    _jobPostRepository.Delete(item.Id);
+                }
+            }
+
             _firmRepository.Delete(firmId);
             return true;
         }
@@ -53,7 +62,7 @@ namespace JobFind.BusinessLayer.Concrete
         public async Task<IEnumerable<ResponseFirmDTO>> GetAllFirm()
         {
             var returnedList = new List<ResponseFirmDTO>();
-
+            
             var allfirm = await _firmRepository.GetAll();
             if (allfirm != null)
             {

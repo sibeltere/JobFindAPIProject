@@ -13,5 +13,7 @@ namespace JobFind.Constants
         public const string USER_NOTFOUND = "Kullanıcı bulunmamaktadır";
         public const string ALREADY_HASCV = "Kullanıcının yalnızca bir adet CV'si oluşturulabilir";
         public const string FIRM_NOTFOUND = "Firma bulunamadı!";
+        public const string ALREADY_HASJOBPOST = "Bu iş ilanına daha önce başvuru yaptınız!";
+        public const string JOBPOST_NOTFOUND = "Böyle bir ilan bulunmamaktadır!";
     }
 }

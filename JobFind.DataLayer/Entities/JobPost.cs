@@ -12,5 +12,10 @@ namespace JobFind.DataLayer.Entities
         public string Definition { get; set; }
         public string Location { get; set; }
         public DateTime ExpirationDate { get; set; }
+        public List<string> ApplyUsers { get; set; }
+        public JobPost()
+        {
+            ApplyUsers = new List<string>();
+        }
     }
 }

@@ -26,15 +26,15 @@ namespace JobFind.BusinessLayer.Concrete
             this._userRepository = userRepository;
             this._mapper = mapper;
         }
+
         #endregion
 
         #region Methods
         public bool CreateUser(UserDTO userDTO)
         {
             if (userDTO == null)
-            {
                 return false;
-            }
+
             var user = _mapper.Map<User>(userDTO);
             _userRepository.Create(user);
             return true;
@@ -61,7 +61,6 @@ namespace JobFind.BusinessLayer.Concrete
             }
             return returnedList;
         }
-
 
         public ResponseUserDTO GetUserByEmail(string email)
         {
@@ -92,6 +91,7 @@ namespace JobFind.BusinessLayer.Concrete
 
             return userDTO;
         }
+
         #endregion
 
     }
