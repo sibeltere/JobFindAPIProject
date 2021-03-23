@@ -26,7 +26,6 @@ namespace JobFind.Containers.MicrosoftIoC
             services.AddScoped<ICVService, CVService>();
             services.AddScoped<IJobPostService, JobPostService>();
 
-
             services.AddHttpContextAccessor();
             services.AddControllers().AddNewtonsoftJson(options => options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
             services.AddHealthChecks();

@@ -44,7 +44,7 @@ namespace JobFind.Controllers
 
             _memCache.Set(cacheKey, allApply, new MemoryCacheEntryOptions
             {
-                AbsoluteExpiration = DateTime.Now.AddMinutes(2), //iki dakika boyunca cacheden okur
+                AbsoluteExpiration = DateTime.Now.AddSeconds(10), //10 saniye boyunca cacheden okur
                 Priority = CacheItemPriority.Normal
             });
 

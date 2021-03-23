@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using JobFind.BusinessLayer.Abstracts;
+using JobFind.BusinessLayer.Helpers;
 using JobFind.DataLayer.DTOModels;
 using JobFind.DataLayer.DTOModels.Request;
 using JobFind.DataLayer.DTOModels.Response;
@@ -58,6 +59,22 @@ namespace JobFind.BusinessLayer.Concrete
             if (alluser != null)
             {
                 returnedList = _mapper.Map<List<ResponseUserDTO>>(alluser);
+                foreach (var user in returnedList)
+                {
+                    if (user.ResponseCVDTO != null)
+                    {
+                        TimeSpan workTime = new TimeSpan();
+                        foreach (var experience in user.ResponseCVDTO.ResponseExperienceInformationsDTO)
+                        {
+                            workTime += experience.EndDate - experience.StartDate;
+                        }
+                        var year = (int)(workTime.Days / 365.2425);
+                        var month = (int)((workTime.Days % 365.2425) / 30.436875);
+                        var day = (int)(((workTime.Days % 365.2425) % 30.436875));
+
+                        user.ResponseCVDTO.TotalWorkTime = year + " Yıl " + month + " Ay " + day + " Gün";
+                    }
+                }
             }
             return returnedList;
         }
@@ -88,11 +105,8 @@ namespace JobFind.BusinessLayer.Concrete
                     userDTO = _mapper.Map<ResponseUserDTO>(response.Result);
                 }
             }
-
             return userDTO;
         }
-
         #endregion
-
     }
 }

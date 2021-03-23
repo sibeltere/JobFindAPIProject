@@ -9,6 +9,6 @@ namespace JobFind.DataLayer.DTOModels.Response
         public string Job { get; set; }
         public IList<ResponseEducationDTO> ResponseEducationInformationsDTO { get; set; }
         public IList<ResponseExperienceDTO> ResponseExperienceInformationsDTO { get; set; }
-        public double TotalWorkTime { get; set; }
+        public string TotalWorkTime { get; set; }
     }
 }

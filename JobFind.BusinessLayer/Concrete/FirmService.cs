@@ -54,7 +54,6 @@ namespace JobFind.BusinessLayer.Concrete
                     _jobPostRepository.Delete(item.Id);
                 }
             }
-
             _firmRepository.Delete(firmId);
             return true;
         }
