@@ -56,8 +56,8 @@ namespace JobFind.Controllers
                 return OK(StatusCodeType.ALREADY_HASJOBPOST, StatusMessage.ALREADY_HASJOBPOST, false);
 
             var response = _jobPostService.ApplyJobPost(model);
-            if (!response)
-                return OK(StatusCodeType.HAS_EXCEPTION, StatusMessage.HAS_EXCEPTION, response);
+            if (string.IsNullOrEmpty(response.Id))
+                return OK(StatusCodeType.HAS_EXCEPTION, StatusMessage.HAS_EXCEPTION, false);
 
             return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
         }

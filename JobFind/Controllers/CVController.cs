@@ -36,7 +36,7 @@ public class CVController : BaseApiController
             return OK(StatusCodeType.USER_NOTFOUND, StatusMessage.USER_NOTFOUND, false);
         }
 
-        if (user.ResponseCVDTO != null)
+        if (!string.IsNullOrEmpty(user.ResponseCVDTO.Job))
         {
             return OK(StatusCodeType.ALREADY_HASCV, StatusMessage.ALREADY_HASCV, false);
         }

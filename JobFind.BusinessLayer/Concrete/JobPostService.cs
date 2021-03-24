@@ -53,16 +53,21 @@ namespace JobFind.BusinessLayer.Concrete
         }
 
 
-        public bool ApplyJobPost(ApplyJobPostDTO applyJobPostDTO)
+        public ResponseJobPostDTO ApplyJobPost(ApplyJobPostDTO applyJobPostDTO)
         {
-            if (applyJobPostDTO == null)
-                return false;
-            var jobPost = _jobPostRepository.GetFilter(x => x.Id == applyJobPostDTO.JobPostId);
-            if (jobPost.Result == null)
-                return false;
-            jobPost.Result.ApplyUsers.Add(applyJobPostDTO.UserId);
-            _jobPostRepository.Update(jobPost.Result);
-            return true;
+            var responseJobPostDTO = new ResponseJobPostDTO();
+            if (applyJobPostDTO != null)
+            {
+                var jobPost = _jobPostRepository.GetFilter(x => x.Id == applyJobPostDTO.JobPostId);
+                if (jobPost.Result != null)
+                {
+                    jobPost.Result.ApplyUsers.Add(applyJobPostDTO.UserId);
+                    _jobPostRepository.Update(jobPost.Result);
+                    responseJobPostDTO = _mapper.Map<ResponseJobPostDTO>(jobPost.Result);
+                }
+            }
+
+            return responseJobPostDTO;
         }
 
         public ResponseJobPostDTO GetJobPostById(string jobPostId)

@@ -9,5 +9,9 @@ namespace JobFind.DataLayer.Entities
         public string Email { get; set; }
         public string Password { get; set; }
         public CV CV { get; set; }
+        public User()
+        {
+            CV = new CV();
+        }
     }
 }

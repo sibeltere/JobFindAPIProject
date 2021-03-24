@@ -11,7 +11,7 @@ namespace JobFind.BusinessLayer.Abstracts
     {
         List<ResponseJobPostDTO> GetJobPostByFirmId(string firmId);
         bool AnyApplyUser(ApplyJobPostDTO applyJobPostDTO);
-        bool ApplyJobPost(ApplyJobPostDTO applyJobPostDTO);
+        ResponseJobPostDTO ApplyJobPost(ApplyJobPostDTO applyJobPostDTO);
         ResponseJobPostDTO GetJobPostById(string jobPostId);
         Task<IEnumerable<ResponseJobPostDTO>> GetAllApplyByJobPost(string jobPostId);
     }
