@@ -7,6 +7,7 @@ using JobFind.DataLayer.Entities;
 using JobFind.DataLayer.Repository;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -116,6 +117,35 @@ namespace JobFind.BusinessLayer.Concrete
 
             responseFirmDTO = _mapper.Map<ResponseFirmDTO>(updatedFirm);
             return responseFirmDTO;
+        }
+
+        public ResponseJobPostDTO UpdateFirmJobPost(UpdateJobPostDTO updateJobPostDTO)
+        {
+            if (updateJobPostDTO == null)
+                return null;
+
+            var responseJobPostDTO = new ResponseJobPostDTO();
+
+            var jobPost = _mapper.Map<JobPost>(updateJobPostDTO);
+            _jobPostRepository.Update(jobPost);
+
+
+            //firmanında ilgli ilanı güncellenir.
+            var firm = _firmRepository.Find(updateJobPostDTO.FirmId);
+
+            foreach (var item in firm.Result.JobPosts)
+            {
+                if (item.Id == jobPost.Id)
+                {
+                    item.Definition = jobPost.Definition;
+                    item.Location = jobPost.Location;
+                    item.ExpirationDate = jobPost.ExpirationDate;
+                }
+            }
+
+            _firmRepository.Update(firm.Result);
+            responseJobPostDTO = _mapper.Map<ResponseJobPostDTO>(jobPost);
+            return responseJobPostDTO;
         }
         #endregion
 

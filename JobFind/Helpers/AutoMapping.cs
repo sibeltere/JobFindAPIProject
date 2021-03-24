@@ -67,6 +67,7 @@ namespace JobFind.Helpers
 
             #region JobPostMap
             CreateMap<JobPost, JobPostDTO>().ReverseMap();
+            CreateMap<JobPost, UpdateJobPostDTO>().ReverseMap();
             CreateMap<JobPost, ResponseJobPostDTO>()
                 .ForMember(x => x.ApplyUsers, cd => cd.MapFrom(map => map.ApplyUsers))
                 .ReverseMap();

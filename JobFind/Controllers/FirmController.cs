@@ -18,13 +18,15 @@ namespace JobFind.Controllers
     {
         #region Fields
         private readonly IFirmService _firmService;
+        private readonly IJobPostService _jobPostService;
         private readonly IMemoryCache _memCache;
         #endregion
 
         #region CTOR
-        public FirmController(IFirmService firmService, IMemoryCache memCache)
+        public FirmController(IFirmService firmService, IJobPostService jobPostService, IMemoryCache memCache)
         {
             this._firmService = firmService;
+            this._jobPostService = jobPostService;
             this._memCache = memCache;
         }
         #endregion
@@ -62,8 +64,8 @@ namespace JobFind.Controllers
             return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, allFirm);
         }
 
-        [HttpPost("AddJobPost")]
-        public IActionResult AddJobPost(JobPostDTO model)
+        [HttpPost("AddFirmJobPost")]
+        public IActionResult AddFirmJobPost(JobPostDTO model)
         {
             var firm = _firmService.GetFirmById(model.FirmId);
             if (string.IsNullOrEmpty(firm.Id))
@@ -72,6 +74,28 @@ namespace JobFind.Controllers
             }
 
             var response = _firmService.AddFirmJobPost(model);
+            if (response == null)
+                return OK(StatusCodeType.HAS_EXCEPTION, StatusMessage.HAS_EXCEPTION, false);
+
+            return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
+        }
+
+        [HttpPost("UpdateFirmJobPost")]
+        public IActionResult UpdateFirmJobPost(UpdateJobPostDTO model)
+        {
+            var jobPost = _jobPostService.GetJobPostById(model.Id);
+            if (string.IsNullOrEmpty(jobPost.Id))
+            {
+                return OK(StatusCodeType.JOBPOST_NOTFOUND, StatusMessage.JOBPOST_NOTFOUND, false);
+            }
+
+            var firm = _firmService.GetFirmById(model.FirmId);
+            if (string.IsNullOrEmpty(firm.Id))
+            {
+                return OK(StatusCodeType.FIRM_NOTFOUND, StatusMessage.FIRM_NOTFOUND, false);
+            }
+
+            var response = _firmService.UpdateFirmJobPost(model);
             if (response == null)
                 return OK(StatusCodeType.HAS_EXCEPTION, StatusMessage.HAS_EXCEPTION, false);
 

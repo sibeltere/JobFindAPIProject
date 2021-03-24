@@ -14,6 +14,7 @@ namespace JobFind.BusinessLayer.Abstracts
         ResponseFirmDTO UpdateFirm(UpdateFirmDTO updateFirmDTO);
         bool DeleteFirm(string firmId);
         ResponseJobPostDTO AddFirmJobPost(JobPostDTO jobPostDTO);
+        ResponseJobPostDTO UpdateFirmJobPost(UpdateJobPostDTO updateJobPostDTO);
         Task<IEnumerable<ResponseFirmDTO>> GetAllFirm();
         ResponseFirmDTO GetFirmById(string Id);
     }

@@ -57,49 +57,6 @@ namespace JobFind.Containers.MicrosoftIoC
                         Url = new Uri(_swaggerSettings.SwaggerDoc.Url)
                     }
                 });
-
-                // JWT
-                //var jwtSecurityScheme = new OpenApiSecurityScheme
-                //{
-                //    In = ParameterLocation.Header,
-                //    Name = _swaggerSettings.SecurityDefinition.Name,
-                //    Type = SecuritySchemeType.Http,
-                //    Description = _swaggerSettings.SecurityDefinition.Description,
-                //    BearerFormat = _swaggerSettings.SecurityDefinition.BearerFormat,
-                //    Scheme = _swaggerSettings.SecurityDefinition.Scheme,
-                //    Reference = new OpenApiReference()
-                //    {
-                //        Id = JwtBearerDefaults.AuthenticationScheme,
-                //        Type = ReferenceType.SecurityScheme
-                //    }
-                //};
-
-                //// Basic Auth
-                //var basicSecurityScheme = new OpenApiSecurityScheme
-                //{
-                //    Type = SecuritySchemeType.Http,
-                //    Scheme = _swaggerSettings.SecurityScheme.Basic,
-                //    Reference = new OpenApiReference
-                //    {
-                //        Id = _swaggerSettings.SecurityScheme.BasicAuth,
-                //        Type = ReferenceType.SecurityScheme
-                //    }
-                //};
-
-                //Güvenlik Kurallarına her iki yönteminde ekliyorum.
-                //options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, jwtSecurityScheme);
-                //options.AddSecurityDefinition(basicSecurityScheme.Reference.Id, basicSecurityScheme);
-
-                ////Secret Key
-                //options.OperationFilter<AddRequiredHeaderParameterFilter>();
-
-                ////Gerekliliği belirtiyorum.
-                //options.AddSecurityRequirement(new OpenApiSecurityRequirement
-                //{
-                //   {basicSecurityScheme, new string[] { }},
-                //    {jwtSecurityScheme, new string[] { }}
-                //});
-
             });
         }
     }
