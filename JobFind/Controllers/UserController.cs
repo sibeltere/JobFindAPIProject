@@ -43,8 +43,8 @@ namespace JobFind.Controllers
             }
 
             var response = _userService.CreateUser(model);
-            if (!response)
-                return OK(StatusCodeType.HAS_EXCEPTION, StatusMessage.HAS_EXCEPTION, response);
+            if (string.IsNullOrEmpty(response.Id))
+                return OK(StatusCodeType.HAS_EXCEPTION, StatusMessage.HAS_EXCEPTION, false);
 
             return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
         }
@@ -59,52 +59,22 @@ namespace JobFind.Controllers
             return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
         }
 
-        [HttpPost("CreateCV")]
-        public IActionResult CreateCV(CVDTO model)
+        [HttpPost("UpdateUser")]
+        public IActionResult UpdateUser(UpdateUserDTO model)
         {
-            var user = _userService.GetUserById(model.UserId);
-            if (string.IsNullOrEmpty(user.Id))
+            var user = _userService.GetUserByEmail(model.Email);
+            if (!string.IsNullOrEmpty(user.Id))
             {
-                return OK(StatusCodeType.USER_NOTFOUND, StatusMessage.USER_NOTFOUND, false);
+                return OK(StatusCodeType.ALREADY_HASEMAIL, StatusMessage.ALREADY_HASEMAIL, false);
             }
 
-            if (user.ResponseCVDTO != null)
-            {
-                return OK(StatusCodeType.ALREADY_HASCV, StatusMessage.ALREADY_HASCV, false);
-            }
-
-            var response = _cvService.CreateCV(model);
-            if (!response)
+            var response = _userService.UpdateUser(model);
+            if (response == null)
                 return OK(StatusCodeType.HAS_EXCEPTION, StatusMessage.HAS_EXCEPTION, response);
 
             return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
         }
 
-        [HttpPost("ApplyJobPost")]
-        public IActionResult ApplyJobPost(ApplyJobPostDTO model)
-        {
-            var user = _userService.GetUserById(model.UserId);
-            if (string.IsNullOrEmpty(user.Id))
-            {
-                return OK(StatusCodeType.USER_NOTFOUND, StatusMessage.USER_NOTFOUND, false);
-            }
-
-            var jobPost = _jobPostService.GetJobPostById(model.JobPostId);
-            if (string.IsNullOrEmpty(jobPost.Id))
-            {
-                return OK(StatusCodeType.JOBPOST_NOTFOUND, StatusMessage.JOBPOST_NOTFOUND, false);
-            }
-
-            var hasApplyUser = _jobPostService.AnyApplyUser(model);
-            if (hasApplyUser)
-                return OK(StatusCodeType.ALREADY_HASJOBPOST, StatusMessage.ALREADY_HASJOBPOST, false);
-
-            var response = _jobPostService.ApplyJobPost(model);
-            if (!response)
-                return OK(StatusCodeType.HAS_EXCEPTION, StatusMessage.HAS_EXCEPTION, response);
-
-            return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
-        }
 
         [HttpGet("GetAllUser")]
         public async Task<IActionResult> GetAllUser()

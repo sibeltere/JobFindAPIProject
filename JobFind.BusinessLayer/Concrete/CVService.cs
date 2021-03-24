@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using JobFind.BusinessLayer.Abstracts;
 using JobFind.DataLayer.DTOModels.Request;
+using JobFind.DataLayer.DTOModels.Response;
 using JobFind.DataLayer.Entities;
 using JobFind.DataLayer.Repository;
 using System;
@@ -26,16 +27,32 @@ namespace JobFind.BusinessLayer.Concrete
         #endregion
 
         #region Methods
-        public bool CreateCV(CVDTO cvDTO)
+        public ResponseCVDTO CreateCV(CVDTO cvDTO)
         {
             if (cvDTO == null)
-                return false;
+                return null;
+            var responseCVDTO = new ResponseCVDTO();
 
             var cv = _mapper.Map<CV>(cvDTO);
             var user = _userRepository.GetFilter(x => x.Id == cvDTO.UserId);
             user.Result.CV = cv;
             _userRepository.Update(user.Result);
-            return true;
+
+            responseCVDTO = _mapper.Map<ResponseCVDTO>(cv);
+
+            //Toplam çalışma süresini hesaplayı response da gösterilmesi amaçlanmaktadır.
+            TimeSpan workTime = new TimeSpan();
+            foreach (var experience in responseCVDTO.ResponseExperienceInformationsDTO)
+            {
+                workTime += experience.EndDate - experience.StartDate;
+            }
+            var year = (int)(workTime.Days / 365.2425);
+            var month = (int)((workTime.Days % 365.2425) / 30.436875);
+            var day = (int)(((workTime.Days % 365.2425) % 30.436875));
+
+            responseCVDTO.TotalWorkTime = year + " Yıl " + month + " Ay " + day + " Gün";
+
+            return responseCVDTO;
         }
         #endregion
 

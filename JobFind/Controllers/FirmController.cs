@@ -34,7 +34,7 @@ namespace JobFind.Controllers
         public IActionResult CreateFirm(FirmDTO model)
         {
             var response = _firmService.CreateFirm(model);
-            if (!response)
+            if (string.IsNullOrEmpty(response.Id))
                 return OK(StatusCodeType.HAS_EXCEPTION, StatusMessage.HAS_EXCEPTION, response);
 
             return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
@@ -72,9 +72,9 @@ namespace JobFind.Controllers
             }
 
             var response = _firmService.AddFirmJobPost(model);
-            if (!response)
+            if (response == null)
                 return OK(StatusCodeType.HAS_EXCEPTION, StatusMessage.HAS_EXCEPTION, false);
-           
+
             return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
         }
 

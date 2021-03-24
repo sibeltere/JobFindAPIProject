@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using JobFind.BusinessLayer.Abstracts;
-using JobFind.BusinessLayer.Helpers;
 using JobFind.DataLayer.DTOModels;
 using JobFind.DataLayer.DTOModels.Request;
 using JobFind.DataLayer.DTOModels.Response;
@@ -31,22 +30,23 @@ namespace JobFind.BusinessLayer.Concrete
         #endregion
 
         #region Methods
-        public bool CreateUser(UserDTO userDTO)
+        public ResponseUserDTO CreateUser(UserDTO model)
         {
-            if (userDTO == null)
-                return false;
-
-            var user = _mapper.Map<User>(userDTO);
-            _userRepository.Create(user);
-            return true;
+            var userDTO = new ResponseUserDTO();
+            if (model != null)
+            {
+                var user = _mapper.Map<User>(model);
+                var addedUser = _userRepository.Create(user);
+                userDTO = _mapper.Map<ResponseUserDTO>(addedUser.Result);
+            }
+            return userDTO;
         }
 
         public bool DeleteUser(string userId)
         {
             if (string.IsNullOrEmpty(userId))
-            {
                 return false;
-            }
+
             _userRepository.Delete(userId);
             return true;
         }
@@ -106,6 +106,19 @@ namespace JobFind.BusinessLayer.Concrete
                 }
             }
             return userDTO;
+        }
+
+        public ResponseUserDTO UpdateUser(UpdateUserDTO updateUserDTO)
+        {
+            if (updateUserDTO == null)
+                return null;
+
+            var responseUserDTO = new ResponseUserDTO();
+            var updatedUser = _mapper.Map<User>(updateUserDTO);
+            _userRepository.Update(updatedUser);
+
+            responseUserDTO = _mapper.Map<ResponseUserDTO>(updatedUser);
+            return responseUserDTO;
         }
         #endregion
     }

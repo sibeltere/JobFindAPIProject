@@ -49,15 +49,16 @@ namespace JobFind.DataLayer.Repository
             return model;
         }
 
-        public async Task Create(T model)
+        public async Task<T> Create(T model)
         {
             await Collection.InsertOneAsync(model);
+            return model;
         }
 
-        public async Task<bool> Update(T model)
+        public async Task<T> Update(T model)
         {
             ReplaceOneResult updateResult = await Collection.ReplaceOneAsync(filter: g => g.Id == model.Id, replacement: model);
-            return updateResult.IsAcknowledged && updateResult.ModifiedCount > 0;
+            return model;
         }
 
         public async Task<bool> Delete(object Id)

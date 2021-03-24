@@ -20,6 +20,8 @@ namespace JobFind.Helpers
             CreateMap<User, ResponseUserDTO>()
                 .ForMember(x => x.ResponseCVDTO, cd => cd.MapFrom(map => map.CV))
                 .ReverseMap();
+            CreateMap<User, UpdateUserDTO>()
+             .ReverseMap();
             #endregion
 
             #region FirmMap

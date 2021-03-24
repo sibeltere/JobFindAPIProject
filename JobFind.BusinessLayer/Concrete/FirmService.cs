@@ -21,7 +21,7 @@ namespace JobFind.BusinessLayer.Concrete
         #endregion
 
         #region CTOR
-        public FirmService(IMongoRepositoryBase<Firm> firmRepository, IMongoRepositoryBase<JobPost> jobPostRepository,IMapper mapper)
+        public FirmService(IMongoRepositoryBase<Firm> firmRepository, IMongoRepositoryBase<JobPost> jobPostRepository, IMapper mapper)
         {
             this._firmRepository = firmRepository;
             this._jobPostRepository = jobPostRepository;
@@ -30,14 +30,16 @@ namespace JobFind.BusinessLayer.Concrete
         #endregion
 
         #region Methods
-        public bool CreateFirm(FirmDTO firmDTO)
+        public ResponseFirmDTO CreateFirm(FirmDTO model)
         {
-            if (firmDTO == null)
-                return false;
-
-            var firm = _mapper.Map<Firm>(firmDTO);
-            _firmRepository.Create(firm);
-            return true;
+            var firmDTO = new ResponseFirmDTO();
+            if (model != null)
+            {
+                var mapperFirm = _mapper.Map<Firm>(model);
+                var addedFirm = _firmRepository.Create(mapperFirm);
+                firmDTO = _mapper.Map<ResponseFirmDTO>(addedFirm.Result);
+            }
+            return firmDTO;
         }
 
         public bool DeleteFirm(string firmId)
@@ -61,7 +63,7 @@ namespace JobFind.BusinessLayer.Concrete
         public async Task<IEnumerable<ResponseFirmDTO>> GetAllFirm()
         {
             var returnedList = new List<ResponseFirmDTO>();
-            
+
             var allfirm = await _firmRepository.GetAll();
             if (allfirm != null)
             {
@@ -85,10 +87,11 @@ namespace JobFind.BusinessLayer.Concrete
             return firmDTO;
         }
 
-        public bool AddFirmJobPost(JobPostDTO jobPostDTO)
+        public ResponseJobPostDTO AddFirmJobPost(JobPostDTO jobPostDTO)
         {
+            var responseJobPostDTO = new ResponseJobPostDTO();
             if (jobPostDTO == null)
-                return false;
+                return null;
 
             var jobPost = _mapper.Map<JobPost>(jobPostDTO);
             _jobPostRepository.Create(jobPost);
@@ -97,7 +100,10 @@ namespace JobFind.BusinessLayer.Concrete
 
             firm.Result.JobPosts.Add(jobPost);
             _firmRepository.Update(firm.Result);
-            return true;
+
+            responseJobPostDTO = _mapper.Map<ResponseJobPostDTO>(jobPost);
+
+            return responseJobPostDTO;
         }
         #endregion
 

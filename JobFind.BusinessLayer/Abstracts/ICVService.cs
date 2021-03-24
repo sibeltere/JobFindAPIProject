@@ -1,4 +1,5 @@
 ﻿using JobFind.DataLayer.DTOModels.Request;
+using JobFind.DataLayer.DTOModels.Response;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,6 @@ namespace JobFind.BusinessLayer.Abstracts
 {
     public interface ICVService
     {
-        bool CreateCV(CVDTO cvDTO);
+        ResponseCVDTO CreateCV(CVDTO cvDTO);
     }
 }
