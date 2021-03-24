@@ -88,6 +88,22 @@ namespace JobFind.Controllers
 
             return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
         }
+
+        [HttpPost("UpdateFirm")]
+        public IActionResult UpdateFirm(UpdateFirmDTO model)
+        {
+            var firm = _firmService.GetFirmById(model.Id);
+            if (string.IsNullOrEmpty(firm.Id))
+            {
+                return OK(StatusCodeType.FIRM_NOTFOUND, StatusMessage.FIRM_NOTFOUND, false);
+            }
+
+            var response = _firmService.UpdateFirm(model);
+            if (response == null)
+                return OK(StatusCodeType.HAS_EXCEPTION, StatusMessage.HAS_EXCEPTION, response);
+
+            return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
+        }
         #endregion
     }
 }

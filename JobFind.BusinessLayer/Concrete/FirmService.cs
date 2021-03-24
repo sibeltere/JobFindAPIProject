@@ -44,7 +44,6 @@ namespace JobFind.BusinessLayer.Concrete
 
         public bool DeleteFirm(string firmId)
         {
-            //firma silinirken firmanın yayında ilanı olup olmadığı bakılmalı eğer varsa ilan silinip sonra firma silinmeli
             if (string.IsNullOrEmpty(firmId))
                 return false;
 
@@ -104,6 +103,19 @@ namespace JobFind.BusinessLayer.Concrete
             responseJobPostDTO = _mapper.Map<ResponseJobPostDTO>(jobPost);
 
             return responseJobPostDTO;
+        }
+
+        public ResponseFirmDTO UpdateFirm(UpdateFirmDTO updateFirmDTO)
+        {
+            if (updateFirmDTO == null)
+                return null;
+
+            var responseFirmDTO = new ResponseFirmDTO();
+            var updatedFirm = _mapper.Map<Firm>(updateFirmDTO);
+            _firmRepository.Update(updatedFirm);
+
+            responseFirmDTO = _mapper.Map<ResponseFirmDTO>(updatedFirm);
+            return responseFirmDTO;
         }
         #endregion
 

@@ -29,6 +29,8 @@ namespace JobFind.Helpers
             CreateMap<Firm, ResponseFirmDTO>()
                  .ForMember(x => x.ResponseJobPostDTOs, cd => cd.MapFrom(map => map.JobPosts))
                 .ReverseMap();
+            CreateMap<Firm, UpdateFirmDTO>()
+            .ReverseMap();
             #endregion
 
             #region EducationMap
