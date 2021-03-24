@@ -41,7 +41,10 @@ namespace JobFind.Controllers
             {
                 return OK(StatusCodeType.USER_NOTFOUND, StatusMessage.USER_NOTFOUND, false);
             }
-
+            if (user.ResponseCVDTO == null)
+            {
+                return OK(StatusCodeType.CV_NOTFOUND, StatusMessage.CV_NOTFOUND, false);
+            }
             var jobPost = _jobPostService.GetJobPostById(model.JobPostId);
             if (string.IsNullOrEmpty(jobPost.Id))
             {

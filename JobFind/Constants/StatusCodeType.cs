@@ -14,7 +14,8 @@ namespace JobFind.Constants
         ALREADY_HASCV = 1004,
         FIRM_NOTFOUND = 1005,
         ALREADY_HASJOBPOST = 1006,
-        JOBPOST_NOTFOUND = 1007
+        JOBPOST_NOTFOUND = 1007,
+        CV_NOTFOUND = 1008
 
     }
 }
