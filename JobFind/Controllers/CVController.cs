@@ -47,6 +47,17 @@ public class CVController : BaseApiController
 
         return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
     }
+
+
+    [HttpPost("UpdateCV")]
+    public IActionResult UpdateCV(UpdateCVDTO model)
+    {
+        var response = _cvService.UpdateCV(model);
+        if (response == null)
+            return OK(StatusCodeType.HAS_EXCEPTION, StatusMessage.HAS_EXCEPTION, response);
+
+        return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
+    }
     #endregion
 
 }

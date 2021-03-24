@@ -10,5 +10,6 @@ namespace JobFind.BusinessLayer.Abstracts
     public interface ICVService
     {
         ResponseCVDTO CreateCV(CVDTO cvDTO);
+        ResponseUpdateCVDTO UpdateCV(UpdateCVDTO updateCVDTO);
     }
 }

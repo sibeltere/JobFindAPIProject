@@ -54,6 +54,34 @@ namespace JobFind.BusinessLayer.Concrete
 
             return responseCVDTO;
         }
+
+        public ResponseUpdateCVDTO UpdateCV(UpdateCVDTO updateCVDTO)
+        {
+            if (updateCVDTO == null)
+                return null;
+
+            var responseUpdateCVDTO= new ResponseUpdateCVDTO();
+
+            var cv = _mapper.Map<CV>(updateCVDTO);
+            var user = _userRepository.GetFilter(x => x.Id == updateCVDTO.UserId);
+            user.Result.CV = cv;
+            _userRepository.Update(user.Result);
+
+            responseUpdateCVDTO = _mapper.Map<ResponseUpdateCVDTO>(cv);
+
+            //Toplam çalışma süresini hesaplayı response da gösterilmesi amaçlanmaktadır.
+            TimeSpan workTime = new TimeSpan();
+            foreach (var experience in responseUpdateCVDTO.ResponseExperienceInformationsDTO)
+            {
+                workTime += experience.EndDate - experience.StartDate;
+            }
+            var year = (int)(workTime.Days / 365.2425);
+            var month = (int)((workTime.Days % 365.2425) / 30.436875);
+            var day = (int)(((workTime.Days % 365.2425) % 30.436875));
+
+            responseUpdateCVDTO.TotalWorkTime = year + " Yıl " + month + " Ay " + day + " Gün";
+            return responseUpdateCVDTO;
+        }
         #endregion
 
     }

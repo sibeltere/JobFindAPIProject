@@ -52,6 +52,16 @@ namespace JobFind.Helpers
               .ForMember(x => x.ResponseEducationInformationsDTO, cd => cd.MapFrom(map => map.EducationInformations))
               .ForMember(x => x.ResponseExperienceInformationsDTO, cd => cd.MapFrom(map => map.ExperienceInformations))
               .ReverseMap();
+
+            CreateMap<CV, UpdateCVDTO>()
+              .ForMember(x => x.EducationInformationsDTO, cd => cd.MapFrom(map => map.EducationInformations))
+              .ForMember(x => x.ExperienceInformationsDTO, cd => cd.MapFrom(map => map.ExperienceInformations))
+              .ReverseMap();
+            CreateMap<CV, ResponseUpdateCVDTO>()
+              .ForMember(x => x.ResponseEducationInformationsDTO, cd => cd.MapFrom(map => map.EducationInformations))
+              .ForMember(x => x.ResponseExperienceInformationsDTO, cd => cd.MapFrom(map => map.ExperienceInformations))
+              .ReverseMap();
+
             #endregion
 
 
