@@ -32,6 +32,11 @@ namespace JobFind.Controllers
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Yeni bir firma oluşturur.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("CreateFirm")]
         public IActionResult CreateFirm(FirmDTO model)
         {
@@ -42,6 +47,10 @@ namespace JobFind.Controllers
             return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
         }
 
+        /// <summary>
+        /// Tüm firmaları çeker
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("GetAllFirm")]
         public async Task<IActionResult> GetAllFirm()
         {
@@ -64,6 +73,11 @@ namespace JobFind.Controllers
             return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, allFirm);
         }
 
+        /// <summary>
+        /// Firma için ilan oluşturur.
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("AddFirmJobPost")]
         public IActionResult AddFirmJobPost(JobPostDTO model)
         {
@@ -80,6 +94,11 @@ namespace JobFind.Controllers
             return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
         }
 
+        /// <summary>
+        /// Firmanın ilanını günceller
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("UpdateFirmJobPost")]
         public IActionResult UpdateFirmJobPost(UpdateJobPostDTO model)
         {
@@ -102,7 +121,11 @@ namespace JobFind.Controllers
             return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
         }
 
-
+        /// <summary>
+        /// Firma siler
+        /// </summary>
+        /// <param name="firmId"></param>
+        /// <returns></returns>
         [HttpPost("DeleteFirm")]
         public IActionResult DeleteFirm(string firmId)
         {
@@ -113,6 +136,11 @@ namespace JobFind.Controllers
             return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
         }
 
+        /// <summary>
+        /// Firma bilgilerini günceller
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("UpdateFirm")]
         public IActionResult UpdateFirm(UpdateFirmDTO model)
         {

@@ -33,6 +33,11 @@ namespace JobFind.Controllers
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Yeni Kullanıcı Oluşturur
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("CreateUser")]
         public IActionResult CreateUser(UserDTO model)
         {
@@ -49,6 +54,11 @@ namespace JobFind.Controllers
             return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
         }
 
+        /// <summary>
+        /// Kullanıcı Siler
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <returns></returns>
         [HttpPost("DeleteUser")]
         public IActionResult DeleteUser(string userId)
         {
@@ -59,6 +69,11 @@ namespace JobFind.Controllers
             return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
         }
 
+        /// <summary>
+        /// Kullanıcı Günceller
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("UpdateUser")]
         public IActionResult UpdateUser(UpdateUserDTO model)
         {
@@ -75,7 +90,10 @@ namespace JobFind.Controllers
             return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
         }
 
-
+        /// <summary>
+        /// Tüm kullanıcıları çeker
+        /// </summary>
+        /// <returns></returns>
         [HttpGet("GetAllUser")]
         public async Task<IActionResult> GetAllUser()
         {

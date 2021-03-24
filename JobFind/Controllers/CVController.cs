@@ -27,6 +27,11 @@ public class CVController : BaseApiController
     #endregion
 
     #region Methods
+    /// <summary>
+    /// User için CV oluşturur.
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
     [HttpPost("CreateCV")]
     public IActionResult CreateCV(CVDTO model)
     {
@@ -48,7 +53,11 @@ public class CVController : BaseApiController
         return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
     }
 
-
+    /// <summary>
+    /// User'ın CV'sini günceller.
+    /// </summary>
+    /// <param name="model"></param>
+    /// <returns></returns>
     [HttpPost("UpdateCV")]
     public IActionResult UpdateCV(UpdateCVDTO model)
     {

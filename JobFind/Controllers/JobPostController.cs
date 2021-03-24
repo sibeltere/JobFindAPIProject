@@ -33,6 +33,11 @@ namespace JobFind.Controllers
 
         #region Methods
 
+        /// <summary>
+        /// İlana Başvuru Yapar
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         [HttpPost("ApplyJobPost")]
         public IActionResult ApplyJobPost(ApplyJobPostDTO model)
         {
@@ -62,7 +67,11 @@ namespace JobFind.Controllers
             return OK(StatusCodeType.SUCCESS, StatusMessage.SUCCESS, response);
         }
 
-
+        /// <summary>
+        /// Response'daki ApplyUser alanı ile ilan bazlı başvuruları görüntüler. 
+        /// </summary>
+        /// <param name="jobPostId"></param>
+        /// <returns></returns>
         [HttpGet("GetAllApplyByJobPost")]
         public async Task<IActionResult> GetAllApplyByJobPost(string jobPostId)
         {
